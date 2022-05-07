@@ -1,4 +1,4 @@
-import { Card, CardActionArea, makeStyles } from '@mui/material'
+import { Card, CardActionArea } from '@mui/material'
 
 export type WorkCardProps = {
   children?: React.ReactNode

@@ -5,6 +5,7 @@ import { Container } from 'src/conpoments/Container'
 import { Content } from 'src/conpoments/Content'
 import { WorkCard } from 'src/conpoments/WorkCard'
 import { WorkCardList } from 'src/conpoments/WorkCardList'
+import { WorkDataList } from 'src/constants/constWorkSheet'
 
 const Background = () => (
   <>
@@ -61,30 +62,24 @@ const Top = () => (
 const WorkList = () => (
   <>
     <WorkCardList>
-      <WorkCard maxWidth="480px">
-        <CardHeader
-          avatar={<Avatar>EY</Avatar>}
-          title="3Dブロック崩し (鬼畜Edit)"
-          subheader="September 30, 2020"
-        />
-        <CardMedia component="img" image="/EY_Works/EY_breakblock_kitiku.png" />
-      </WorkCard>
-      <WorkCard maxWidth="480px">
-        <CardHeader
-          avatar={<Avatar>EY</Avatar>}
-          title="3Dブロック崩し (鬼畜Edit)"
-          subheader="September 30, 2020"
-        />
-        <CardMedia component="img" image="/EY_Works/EY_breakblock_kitiku.png" />
-      </WorkCard>
-      <WorkCard maxWidth="480px">
-        <CardHeader
-          avatar={<Avatar>EY</Avatar>}
-          title="3Dブロック崩し (鬼畜Edit)"
-          subheader="September 30, 2020"
-        />
-        <CardMedia component="img" image="/EY_Works/EY_breakblock_kitiku.png" />
-      </WorkCard>
+      {WorkDataList.map((WorkData) => (
+        <WorkCard maxWidth="480px" key={WorkData.id}>
+          <CardHeader
+            avatar={<Avatar>{WorkData.initial}</Avatar>}
+            title={WorkData.title}
+            subheader={WorkData.date}
+          />
+          <CardMedia
+            component="img"
+            image={WorkData.image}
+            sx={{
+              objectFit: 'contain',
+              aspectRatio: '16 / 9',
+              backgroundColor: 'black',
+            }}
+          />
+        </WorkCard>
+      ))}
     </WorkCardList>
   </>
 )
