@@ -7,6 +7,7 @@ import { WorkCard } from 'src/conpoments/WorkCard'
 import { WorkCardList } from 'src/conpoments/WorkCardList'
 import { getAllPosts } from 'src/lib/api'
 import Post from '../types/post'
+import rehypeRaw from 'rehype-raw'
 
 const Background = () => (
   <>
@@ -85,7 +86,9 @@ export const HomePage: NextPage = ({ allPosts }: Props) => {
               slug={post.slug}
               key={post.id}
             >
-              <ReactMarkdown skipHtml={true}>{post.content}</ReactMarkdown>
+              <ReactMarkdown skipHtml={true} rehypePlugins={[rehypeRaw]}>
+                {post.content}
+              </ReactMarkdown>
             </WorkCard>
           ))}
         </WorkCardList>
