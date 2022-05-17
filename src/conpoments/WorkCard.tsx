@@ -26,6 +26,18 @@ const styleModal = {
   maxHeight: '800px',
 }
 
+const styleModalContent = {
+  width: '90%',
+  margin: 'auto',
+  height: '80%',
+  overflow: 'auto',
+  msOverflowStyle: 'none',
+  scrollbarWidth: 'none',
+  '&:-webkit-scrollbat': {
+    display: 'none',
+  },
+}
+
 export type WorkCardProps = {
   children?: React.ReactNode
   maxWidth?: string
@@ -76,23 +88,14 @@ export const WorkCard: React.FC<WorkCardProps> = ({
       </Card>
       <Modal open={modalIsOpen} onClose={closeModal}>
         <Box sx={styleModal}>
-          <Box sx={{ textAlign: 'right' }}>
+          <Box sx={{ textAlign: 'right', height: '10%' }}>
             <Tooltip title="Close" onClick={closeModal} placement="top-end">
               <IconButton>
                 <CloseIcon htmlColor="white" sx={{ fontSize: 40 }} />
               </IconButton>
             </Tooltip>
           </Box>
-          <Box
-            sx={{
-              width: '90%',
-              margin: '0 auto',
-              overflow: 'auto',
-              height: '90%',
-            }}
-          >
-            {children}
-          </Box>
+          <Box sx={styleModalContent}>{children}</Box>
         </Box>
       </Modal>
     </>
