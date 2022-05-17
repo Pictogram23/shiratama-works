@@ -1,11 +1,12 @@
-import { Avatar, CardHeader, CardMedia } from '@mui/material'
 import { NextPage } from 'next'
 import Head from 'next/head'
+import ReactMarkdown from 'react-markdown'
 import { Container } from 'src/conpoments/Container'
 import { Content } from 'src/conpoments/Content'
 import { WorkCard } from 'src/conpoments/WorkCard'
 import { WorkCardList } from 'src/conpoments/WorkCardList'
-import { WorkDataList } from 'src/constants/constWorkSheet'
+import { getAllPosts } from 'src/lib/api'
+import Post from '../types/post'
 
 const Background = () => (
   <>
@@ -59,32 +60,11 @@ const Top = () => (
   </>
 )
 
-const WorkList = () => (
-  <>
-    <WorkCardList>
-      {WorkDataList.map((WorkData) => (
-        <WorkCard maxWidth="480px" key={WorkData.id}>
-          <CardHeader
-            avatar={<Avatar>{WorkData.initial}</Avatar>}
-            title={WorkData.title}
-            subheader={WorkData.date}
-          />
-          <CardMedia
-            component="img"
-            image={WorkData.image}
-            sx={{
-              objectFit: 'contain',
-              aspectRatio: '16 / 9',
-              backgroundColor: 'black',
-            }}
-          />
-        </WorkCard>
-      ))}
-    </WorkCardList>
-  </>
-)
+type Props = {
+  allPosts: Post[]
+}
 
-export const HomePage: NextPage = () => {
+export const HomePage: NextPage = ({ allPosts }: Props) => {
   return (
     <>
       <Head>
@@ -94,10 +74,41 @@ export const HomePage: NextPage = () => {
       <Container>
         <Background />
         <Top />
-        <WorkList />
+        <WorkCardList>
+          {allPosts.map((post) => (
+            <WorkCard
+              maxWidth="480px"
+              title={post.title}
+              coverImage={post.coverImage}
+              date={post.date}
+              initial={post.initial}
+              slug={post.slug}
+              key={post.id}
+            >
+              <ReactMarkdown skipHtml={true}>{post.content}</ReactMarkdown>
+            </WorkCard>
+          ))}
+        </WorkCardList>
       </Container>
     </>
   )
+}
+
+export const getStaticProps = async () => {
+  const allPosts = getAllPosts([
+    'title',
+    'date',
+    'slug',
+    'coverImage',
+    'content',
+    'author',
+    'initial',
+    'id',
+  ])
+
+  return {
+    props: { allPosts },
+  }
 }
 
 export default HomePage
