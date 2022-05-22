@@ -49,9 +49,9 @@ const Top = () => (
       <h1>
         CLARK NEXT Akihabara
         <br />
-        ゲーム・プログラミング専攻へようこそ！
+        ゲーム・アプリコースへようこそ！
       </h1>
-      <p>当専攻に所属する生徒が作り上げた、様々な作品を展示しています。</p>
+      <p>当コースに所属する生徒が作り上げた、様々な作品を展示しています。</p>
     </Content>
     <style jsx>{`
       * {
@@ -69,7 +69,7 @@ export const HomePage: NextPage = ({ allPosts }: Props) => {
   return (
     <>
       <Head>
-        <title>クラーク Ga専攻 作品集</title>
+        <title>クラーク ゲーム・アプリコース 作品集</title>
       </Head>
 
       <Container>
