@@ -1,10 +1,13 @@
-import { Avatar, CardHeader, CardMedia } from '@mui/material'
 import { NextPage } from 'next'
 import Head from 'next/head'
+import ReactMarkdown from 'react-markdown'
 import { Container } from 'src/conpoments/Container'
 import { Content } from 'src/conpoments/Content'
 import { WorkCard } from 'src/conpoments/WorkCard'
 import { WorkCardList } from 'src/conpoments/WorkCardList'
+import { getAllPosts } from 'src/lib/api'
+import Post from '../types/post'
+import rehypeRaw from 'rehype-raw'
 
 const Background = () => (
   <>
@@ -46,9 +49,9 @@ const Top = () => (
       <h1>
         CLARK NEXT Akihabara
         <br />
-        ゲーム・プログラミング専攻へようこそ！
+        ゲーム・アプリコースへようこそ！
       </h1>
-      <p>当専攻に所属する生徒が作り上げた、様々な作品を展示しています。</p>
+      <p>当コースに所属する生徒が作り上げた、様々な作品を展示しています。</p>
     </Content>
     <style jsx>{`
       * {
@@ -58,51 +61,57 @@ const Top = () => (
   </>
 )
 
-const WorkList = () => (
-  <>
-    <WorkCardList>
-      <WorkCard maxWidth="480px">
-        <CardHeader
-          avatar={<Avatar>EY</Avatar>}
-          title="3Dブロック崩し (鬼畜Edit)"
-          subheader="September 30, 2020"
-        />
-        <CardMedia component="img" image="/EY_Works/EY_breakblock_kitiku.png" />
-      </WorkCard>
-      <WorkCard maxWidth="480px">
-        <CardHeader
-          avatar={<Avatar>EY</Avatar>}
-          title="3Dブロック崩し (鬼畜Edit)"
-          subheader="September 30, 2020"
-        />
-        <CardMedia component="img" image="/EY_Works/EY_breakblock_kitiku.png" />
-      </WorkCard>
-      <WorkCard maxWidth="480px">
-        <CardHeader
-          avatar={<Avatar>EY</Avatar>}
-          title="3Dブロック崩し (鬼畜Edit)"
-          subheader="September 30, 2020"
-        />
-        <CardMedia component="img" image="/EY_Works/EY_breakblock_kitiku.png" />
-      </WorkCard>
-    </WorkCardList>
-  </>
-)
+type Props = {
+  allPosts: Post[]
+}
 
-export const HomePage: NextPage = () => {
+export const HomePage: NextPage = ({ allPosts }: Props) => {
   return (
     <>
       <Head>
-        <title>クラーク Ga専攻 作品集</title>
+        <title>クラーク ゲーム・アプリコース 作品集</title>
       </Head>
 
       <Container>
         <Background />
         <Top />
-        <WorkList />
+        <WorkCardList>
+          {allPosts.map((post) => (
+            <WorkCard
+              maxWidth="480px"
+              title={post.title}
+              coverImage={post.coverImage}
+              date={post.date}
+              initial={post.initial}
+              slug={post.slug}
+              key={post.id}
+            >
+              <ReactMarkdown skipHtml={true} rehypePlugins={[rehypeRaw]}>
+                {post.content}
+              </ReactMarkdown>
+            </WorkCard>
+          ))}
+        </WorkCardList>
       </Container>
     </>
   )
+}
+
+export const getStaticProps = async () => {
+  const allPosts = getAllPosts([
+    'title',
+    'date',
+    'slug',
+    'coverImage',
+    'content',
+    'author',
+    'initial',
+    'id',
+  ])
+
+  return {
+    props: { allPosts },
+  }
 }
 
 export default HomePage
