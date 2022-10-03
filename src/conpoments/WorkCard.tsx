@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Card,
   CardActionArea,
   CardHeader,
@@ -11,6 +10,7 @@ import {
 import { Box } from '@mui/system'
 import React, { useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
+import { getDownloadURL, getStorage, ref } from 'firebase/storage'
 
 const styleModal = {
   position: 'absolute',
@@ -41,7 +41,6 @@ const styleModalContent = {
 export type WorkCardProps = {
   children?: React.ReactNode
   maxWidth?: string
-  initial: string
   title: string
   date: string
   coverImage: string
@@ -51,7 +50,6 @@ export type WorkCardProps = {
 export const WorkCard: React.FC<WorkCardProps> = ({
   children,
   maxWidth,
-  initial,
   title,
   date,
   coverImage,
@@ -66,18 +64,22 @@ export const WorkCard: React.FC<WorkCardProps> = ({
     setIsOpen(false)
   }
 
+  const storage = getStorage()
+  const reference = ref(storage, coverImage)
+
+  getDownloadURL(reference).then((url) => {
+    const img = document.getElementById('preview')
+    img.setAttribute('src', url)
+  })
+
   return (
     <>
       <Card sx={{ maxWidth: maxWidth, margin: 3 }} variant="outlined">
         <CardActionArea onClick={openModal}>
-          <CardHeader
-            avatar={<Avatar>{initial}</Avatar>}
-            title={title}
-            subheader={date}
-          />
+          <CardHeader title={title} subheader={date} />
           <CardMedia
+            id="preview"
             component="img"
-            image={`/img/${coverImage}`}
             sx={{
               objectFit: 'contain',
               aspectRatio: '16 / 9',
