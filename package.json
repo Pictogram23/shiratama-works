@@ -6,6 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "export": "next build && next export",
+    "clean": "rimraf .next out",
     "prepare": "husky install",
     "check-types": "tsc --noEmit",
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
@@ -18,6 +20,8 @@
     "@emotion/styled": "^11.8.1",
     "@mui/icons-material": "^5.6.2",
     "@mui/material": "^5.6.4",
+    "firebase": "^9.10.0",
+    "firebase-tools": "^11.13.0",
     "gray-matter": "^4.0.3",
     "next": "12.1.5",
     "react": "18.1.0",
@@ -40,6 +44,7 @@
     "lint-staged": "^12.4.1",
     "npm-run-all": "^4.1.5",
     "prettier": "2.6.2",
+    "rimraf": "^3.0.2",
     "typescript": "^4.6.4"
   },
   "lint-staged": {

@@ -1,5 +1,6 @@
 import { AppProps } from 'next/app'
 import Head from 'next/head'
+import '@/../firebase/firebase'
 
 function MyApp({ Component, pageProps }: AppProps): React.ReactElement {
   return (

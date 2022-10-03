@@ -46,12 +46,8 @@ const Background = () => (
 const Top = () => (
   <>
     <Content align="top" height="300px">
-      <h1>
-        CLARK NEXT Akihabara
-        <br />
-        ゲーム・アプリコースへようこそ！
-      </h1>
-      <p>当コースに所属する生徒が作り上げた、様々な作品を展示しています。</p>
+      <h1>しらたま の作品集へようこそ！</h1>
+      <p>私が過去に制作した、様々な作品を展示しています。</p>
     </Content>
     <style jsx>{`
       * {
@@ -69,7 +65,7 @@ export const HomePage: NextPage = ({ allPosts }: Props) => {
   return (
     <>
       <Head>
-        <title>クラーク ゲーム・アプリコース 作品集</title>
+        <title>しらたま 作品集</title>
       </Head>
 
       <Container>
@@ -82,7 +78,6 @@ export const HomePage: NextPage = ({ allPosts }: Props) => {
               title={post.title}
               coverImage={post.coverImage}
               date={post.date}
-              initial={post.initial}
               slug={post.slug}
               key={post.id}
             >

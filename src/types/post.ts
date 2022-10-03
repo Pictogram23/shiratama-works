@@ -5,7 +5,6 @@ type PostType = {
   date: string
   coverImage: string
   author: string
-  initial: string
   content: string
 }
 
