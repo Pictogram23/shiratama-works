@@ -8,6 +8,7 @@ import { WorkCardList } from 'src/conpoments/WorkCardList'
 import { getAllPosts } from 'src/lib/api'
 import Post from '../types/post'
 import rehypeRaw from 'rehype-raw'
+import { CustomAudio, CustomImg } from '@/lib/convertURL'
 
 const Background = () => (
   <>
@@ -66,6 +67,15 @@ export const HomePage: NextPage = ({ allPosts }: Props) => {
     <>
       <Head>
         <title>しらたま 作品集</title>
+        <link
+          href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css"
+          rel="stylesheet"
+        />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script
+          src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js"
+          type="text/javascript"
+        ></script>
       </Head>
 
       <Container>
@@ -81,7 +91,11 @@ export const HomePage: NextPage = ({ allPosts }: Props) => {
               slug={post.slug}
               key={post.id}
             >
-              <ReactMarkdown skipHtml={true} rehypePlugins={[rehypeRaw]}>
+              <ReactMarkdown
+                components={{ img: CustomImg, audio: CustomAudio }}
+                skipHtml={true}
+                rehypePlugins={[rehypeRaw]}
+              >
                 {post.content}
               </ReactMarkdown>
             </WorkCard>
@@ -100,7 +114,6 @@ export const getStaticProps = async () => {
     'coverImage',
     'content',
     'author',
-    'initial',
     'id',
   ])
 
