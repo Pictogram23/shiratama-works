@@ -53,6 +53,7 @@ export const WorkCard: React.FC<WorkCardProps> = ({
   title,
   date,
   coverImage,
+  slug,
 }) => {
   const [modalIsOpen, setIsOpen] = useState<boolean>(false)
 
@@ -68,8 +69,10 @@ export const WorkCard: React.FC<WorkCardProps> = ({
   const reference = ref(storage, coverImage)
 
   getDownloadURL(reference).then((url) => {
-    const img = document.getElementById('preview')
-    img.setAttribute('src', url)
+    if (typeof document !== 'undefined') {
+      const img = document.getElementById(slug)
+      img.setAttribute('src', url)
+    }
   })
 
   return (
@@ -78,7 +81,7 @@ export const WorkCard: React.FC<WorkCardProps> = ({
         <CardActionArea onClick={openModal}>
           <CardHeader title={title} subheader={date} />
           <CardMedia
-            id="preview"
+            id={slug}
             component="img"
             sx={{
               objectFit: 'contain',
